@@ -1,0 +1,18 @@
+[project]
+name = "eap"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "curl-cffi>=0.15.0",
+    "jinja2>=3.1.6",
+    "linearmodels>=7.0",
+    "pandas>=3.0.2",
+    "pyarrow>=23.0.1",
+    "scipy>=1.17.1",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.6",
+    "tqdm>=4.67.3",
+    "wrds>=3.1.6",
+]
