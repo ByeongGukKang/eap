@@ -1,0 +1,6 @@
+The original SAS code from GHZ does not have all shrcd, it only utilzies (10,11)
+EAPviaML uilizes all shrcd.
+
+The original SAS code from GHZ gather data since 01JAN1975, I replaced with to 01JAN1957 when the EAPviaML sample starts.
+
+The original SAS code use SAS login but I replaced with WRDS macros for SAS Studio via WRDS.

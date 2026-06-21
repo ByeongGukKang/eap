@@ -1,0 +1,131 @@
+# %%
+import polars as pl
+import polars_readstat as pl_rs
+
+selected_columns: list[str] = [
+    # Identifier, date, returns, market value, SIC code
+    "permno",
+    "gvkey",
+    "date",
+    "ret",
+    "mve",
+    "sic2",  # For SIC dummy, only has 73 unique values, EAP via ML has 74 dummy variables
+    # 1. Gu, Kelly, Xiu (2020) 94 Stock-level Characteristics (IA. Table A.6)
+    "absacc",
+    "acc",
+    "aeavol",
+    "age",
+    "agr",
+    "baspread",
+    "beta",
+    "betasq",
+    "bm",
+    "bm_ia",
+    "cash",
+    "cashdebt",
+    "cashpr",
+    "cfp",
+    "cfp_ia",
+    "chatoia",
+    "chcsho",
+    "chempia",
+    "chinv",
+    "chmom",
+    "chpmia",
+    "chtx",
+    "cinvest",
+    "convind",
+    "currat",
+    "depr",
+    "divi",
+    "divo",
+    "dolvol",
+    "dy",
+    "ear",
+    "egr",
+    "ep",
+    "gma",
+    "grcapx",
+    "grltnoa",
+    "herf",
+    "hire",
+    "idiovol",
+    "ill",
+    "indmom",
+    "invest",
+    "lev",
+    "lgr",
+    "maxret",
+    "mom12m",
+    "mom1m",
+    "mom36m",
+    "mom6m",
+    "ms",
+    "mve_m",  # EAP via ML paper IA has typo!!!!!, mvel1 -> mve_m
+    "mve_ia",
+    "nincr",
+    "operprof",
+    "orgcap",
+    "pchcapx_ia",
+    "pchcurrat",
+    "pchdepr",
+    "pchgm_pchsale",
+    "pchquick",
+    "pchsale_pchinvt",
+    "pchsale_pchrect",
+    "pchsale_pchxsga",
+    "pchsaleinv",
+    "pctacc",
+    "pricedelay",
+    "ps",
+    "quick",
+    "rd",
+    "rd_mve",
+    "rd_sale",
+    "realestate",
+    "retvol",
+    "roaq",
+    "roavol",
+    "roeq",
+    "roic",
+    "rsup",
+    "salecash",
+    "saleinv",
+    "salerec",
+    "secured",
+    "securedind",
+    "sgr",
+    "sin",
+    "sp",
+    "std_dolvol",
+    "std_turn",
+    "stdacc",
+    "stdcf",
+    "tang",
+    "tb",
+    "turn",
+    "zerotrade",
+    "disp",
+    "chfeps",
+    "fgr5yr",
+    "chrec",
+    "nanalyst",
+    "sfe",
+    "sue",
+    "ltg",
+]
+
+# SAS file to Polars DataFrame
+# SAS file is manually downloaded using
+# https://drive.google.com/file/d/0BwwEXkCgXEdRQWZreUpKOHBXOUU/view?resourcekey=0-1xjZ8fAc0sTybVC6RADDCA
+df = (
+    pl_rs.scan_readstat("./data/ghz.sas7bdat")
+    .rename(lambda col: col.lower())
+    .select(selected_columns)
+    .cast({"permno": pl.Int32})
+    .collect()
+)
+
+# %%
+# sic2 only has 73 unique values, EAP via ML has 74 dummy variables
+print(df.select(pl.col("sic2")).n_unique())

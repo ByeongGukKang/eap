@@ -11,14 +11,20 @@ wheels/
 uv.lock
 
 # Test codes
-workspace.ipynb
+*.ipynb
 
 # Data
 *.parquet
 *.pickle
+*.csv
+*.sas7bdat
 
 # Ouput
 *.tex
 *.png
 grs_all_result.txt
 grs_no_cat_result.txt
+
+# papers
+Empirical Asset Pricing via Machine Learning.pdf
+hhaa009_supplementary_data.pdf
